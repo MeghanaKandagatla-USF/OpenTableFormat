@@ -1,0 +1,47 @@
+Open Table Formats
+
+The Need for Open Table Formats
+- Raw files (CSV, Parquet) in data lakes lack structure and reliability.
+- Problems: No ACID, no schema evolution, no time travel, slow queries.
+- Previously used Hive with rigid folder-based partitions.
+- Hard to govern and scale efficiently.
+
+What is an Open Table Format?
+- A layer over data lake files that adds table-like behavior.
+- Manages metadata, schema, partitions, and versioning.
+- Makes data lakes behave like SQL tables.
+- Examples: Apache Iceberg, Delta Lake, Apache Hudi
+
+Where Does It Fit in the Stack?
+- Ingestion/ETL → Data Lake → Open Table Format → Query Engine
+- OTF sits between raw file storage and tools like Spark, Trino, Flink.
+- It enables transactional and structured access to lake data.
+
+Apache Iceberg Architecture
+- Query Engine → Iceberg Table Layer → Metadata & Snapshots → Parquet Files
+- Iceberg manages metadata, schema, manifest lists, and snapshots.
+- Optimized for query pruning, time travel, and schema tracking.
+
+Key Features of Open Table Formats
+- ACID Transactions: Snapshot isolation for consistent updates.
+- Time Travel: Query older versions of data safely.
+- Schema Evolution: Add/drop/rename columns without breaking data.
+- Hidden Partitions: Partition logic stored in metadata.
+- Multi-Engine: Compatible with Spark, Trino, Flink, etc.
+
+How Iceberg Works Internally
+- Write data → Create Parquet files + Manifest files
+- Update metadata.json → Create new snapshot version
+- Table always points to latest snapshot (atomic update)
+- Query engines read from optimized manifest metadata
+
+Real-World Use Cases
+- Finance: Time-travel queries for audits & compliance.
+- Machine Learning: Versioned features for model reproducibility.
+- Big Data Analytics: Fast pruning and skipping over large datasets.
+
+Summary
+- Open Table Formats bridge raw files and structured queries.
+- Enable reliable, scalable, and governed data lakes.
+- Apache Iceberg is ideal for complex schema management and multi-engine use.
+- OTFs are essential for modern data lake architecture.
